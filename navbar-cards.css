@@ -1,0 +1,145 @@
+/* ===== CSS Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background: #f5f6fa;
+    color: #333;
+}
+
+/* ===== 导航栏 ===== */
+.navbar {
+    display: flex;
+
+    justify-content: space-between;   /* Logo 左，菜单右 */
+    align-items: center;
+    padding: 16px 60px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.nav-links {
+    display: flex;            /* 让 li 排成一行 */
+    list-style: none;          /* 去掉圆点 */
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 15px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #667eea;
+}
+
+/* ===== 主内容 ===== */
+.main-content {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.main-content h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.main-content > p {
+    color: #888;
+    margin-bottom: 40px;
+    font-size: 16px;
+}
+
+/* ===== 卡片容器 ===== */
+.card-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: stretch; */
+    gap: 24px;
+    flex-wrap: wrap;            /*屏幕小时自动换行*/
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* ===== 单个卡片 ===== */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 36px 28px;
+    text-align: center;
+    flex: 1;                    /* 等分空间 */
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* 推荐卡片高亮 */
+.card-featured {
+    border: 2px solid #667eea;
+    position: relative;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.card ul {
+    list-style: none;
+    margin-bottom: 24px;
+}
+
+.card li {
+    padding: 8px 0;
+    color: #666;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.card li:last-child {
+    border-bottom: none;
+}
+
+/* ===== 卡片按钮 ===== */
+.card-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.card-btn:hover {
+    background: #5a6fd6;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}

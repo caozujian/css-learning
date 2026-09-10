@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Day 1</title>
+    <style>
+        /* === 基础选择器 === */
+        h1 { color: #333; text-align: center; }
+        .highlight { background: yellow; padding: 4px 8px; }
+        #special { color: red; font-weight: bold; }
+
+        /* === 组合选择器 === */
+        .card p { color: #555; }
+        .card > p { font-weight: bold; }
+
+        /* === 伪类 === */
+        a:hover { color: orange; }
+        button:active { transform: scale(0.95); }
+        input:focus { border: 2px solid #667eea; outline: none; }
+        li:first-child { color: #667eea; }
+        li:last-child { color: #e74c3c; }
+        li:nth-child(odd) { background: #f9f9f9; }
+        li:nth-child(even) { background: #eee; }
+
+        /* === 伪元素 === */
+        .note::before { content: '📌 '; }
+        .note::after { content: ' ✅'; }
+        ::selection { background: #667eea; color: white; }
+
+        /* === 基础样式 === */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        ul { padding-left: 20px; }
+        input { width: 100%; padding: 10px; border: 2px solid #ddd; }
+        button { padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>🎨 CSS 选择器练习</h1>
+
+    <h2>基础选择器</h2>
+    <p>普通文字</p>
+    <p class="highlight">用了 .highlight</p>
+    <p id="special">用了 #special</p>
+
+    <h2>组合选择器</h2>
+    <div class="card">
+        <p>直接子元素（子代选择器选中）</p>
+        <div><p>孙子元素（只有后代选择器选中）</p></div>
+    </div>
+
+    <h2>伪类</h2>
+    <input type="text" placeholder="点击聚焦试试 :focus">
+    <br><br>
+    <button>点击试试 :active</button>
+
+    <h2>nth-child</h2>
+    <ul>
+        <li>第1项 :first-child</li>
+        <li>第2项 :nth-child(2)</li>
+        <li>第3项 奇数项</li>
+        <li>第4项 偶数项</li>
+        <li>第5项 :last-child</li>
+    </ul>
+
+    <h2>伪元素</h2>
+    <p class="note">这条笔记前后有装饰</p>
+
+    <p style="text-align:center;color:#999;">选中文字看 ::selection 效果 →</p>
+
+</body>
+</html>

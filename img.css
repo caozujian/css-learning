@@ -1,0 +1,41 @@
+.table-wrapper {
+    overflow-x: auto;       /* 超出时横向滚动 */
+    -webkit-overflow-scrolling: touch;  /* iOS 平滑滚动 */
+}
+
+table {
+    min-width: 600px;       /* 保证表格至少有 600px */
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 桌面端：正常表格 */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #eee; }
+thead { background: #f8f9fa; }
+
+/* 手机端：变成卡片 */
+@media (max-width: 768px) {
+    thead { display: none; }  /* 隐藏表头 */
+
+    tr {
+        display: block;
+        margin-bottom: 16px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border: none;
+    }
+
+    td::before {
+        content: attr(data-label);  /* 用 data-label 显示列名 */
+        font-weight: bold;
+        color: #666;
+    }
+}

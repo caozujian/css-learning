@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品落地页</title>
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">🌟 Brand</div>
+        <button class="menu-toggle">☰</button>
+        <ul class="nav-links">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">功能</a></li>
+            <li><a href="#">价格</a></li>
+            <li><a href="#">关于</a></li>
+        </ul>
+    </nav>
+
+    <!-- 主视觉区 -->
+    <section class="hero">
+        <h1>让创意变为现实</h1>
+        <p>简单、高效、美观的网页开发工具</p>
+        <button class="hero-btn">立即开始</button>
+    </section>
+
+    <!-- 功能卡片区 -->
+    <section class="features">
+        <h2>为什么选择我们</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-icon">🚀</div>
+                <h3>极速开发</h3>
+                <p>拖拽式操作，无需编写复杂代码，快速上线你的项目</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🎨</div>
+                <h3>精美模板</h3>
+                <p>上百款专业设计模板，一键套用，轻松打造品牌形象</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3>全端适配</h3>
+                <p>自动适配手机、平板、电脑，完美呈现每一个屏幕</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔒</div>
+                <h3>安全可靠</h3>
+                <p>企业级安全防护，数据加密传输，让你高枕无忧</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <h3>专属客服</h3>
+                <p>7×24小时在线支持，随时随地解决你的问题</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>数据分析</h3>
+                <p>内置强大的分析工具，实时追踪你的业务增长</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2025 Brand. All rights reserved.</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" title="返回顶部">↑</button>
+
+    <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+</script>
+
+</body>
+</html>

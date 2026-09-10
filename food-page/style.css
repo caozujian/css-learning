@@ -1,0 +1,69 @@
+/* ===== 页面整体 ===== */
+body {
+    background-color: #faf5ef;          /* 温暖的米色背景 */
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    max-width: 600px;                    /* 限制最大宽度 */
+    margin: 0 auto;                      /* 居中 */
+    padding: 40px 20px;
+}
+
+/* ===== 主标题 ===== */
+#page-title {
+    text-align: center;
+    color: #c0503c;                      /* 暖红色 */
+    font-size: 42px;
+    margin-bottom: 5px;
+}
+
+/* ===== 更新时间 ===== */
+.update-time {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+/* ===== 美食卡片 ===== */
+.food-card {
+    background-color: white;
+    border-radius: 16px;                 /* 圆角 */
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);  /* 阴影 */
+}
+
+/* ===== 美食名称 ===== */
+.food-name {
+    color: #2c3e50;
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* ===== 美食图片 ===== */
+.food-card img {
+    width: 100%;                         /* 撑满卡片 */
+    border-radius: 10px;                 /* 圆角 */
+    margin-bottom: 15px;
+}
+
+/* ===== 美食描述 ===== */
+.food-desc {
+    font-size: 16px;
+    line-height: 1.8;                    /* 行高，读起来舒服 */
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* ===== 评分 ===== */
+.food-rating {
+    font-size: 16px;
+    color: #888;
+}
+
+/* ===== 页脚 ===== */
+.footer-note {
+    text-align: center;
+    color: #aaa;
+    margin-top: 40px;
+}

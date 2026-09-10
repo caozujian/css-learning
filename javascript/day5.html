@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 第 5 课</title>
+    <style>
+        body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .todo-app {
+            padding: 20px;
+            background: #f3f5ff;
+            border-radius: 8px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 16px;
+            color: white;
+            background: #667eea;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .clear-button {
+            background: #d9534f;
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        li span {
+            flex: 1;
+        }
+
+        li.done span {
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .delete-button {
+            padding: 6px 10px;
+            background: #d9534f;
+        }
+
+        #hint {
+            min-height: 1.7em;
+            color: #b04a3a;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript 第 5 课：表单与本地存储</h1>
+
+    <h2>1. 使用表单</h2>
+    <pre><code>form.addEventListener("submit", function (event) {
+    event.preventDefault(); // 阻止页面刷新
+});</code></pre>
+    <p>表单提交时默认会刷新页面。使用 <code>preventDefault()</code>，就可以用 JavaScript 自己处理提交。</p>
+
+    <h2>2. 保存和读取数据</h2>
+    <pre><code>localStorage.setItem("todos", JSON.stringify(todos));
+const savedTodos = JSON.parse(localStorage.getItem("todos") || "[]");</code></pre>
+    <p><code>localStorage</code> 只能保存字符串，所以数组需要先用 <code>JSON.stringify</code> 转换，读取时再用 <code>JSON.parse</code> 转回来。</p>
+
+    <div class="todo-app">
+        <h2>可保存的待办列表</h2>
+        <form id="todo-form" class="input-row">
+            <input id="todo-input" type="text" placeholder="例如：复习 DOM" autocomplete="off">
+            <button type="submit">添加</button>
+        </form>
+        <p id="hint"></p>
+        <ul id="todo-list"></ul>
+        <button id="clear-button" class="clear-button" type="button">清空全部</button>
+    </div>
+
+    <script>
+        const storageKey = "javascript-course-todos";
+        const savedTodos = localStorage.getItem(storageKey);
+        const todos = savedTodos ? JSON.parse(savedTodos) : [];
+        const form = document.querySelector("#todo-form");
+        const input = document.querySelector("#todo-input");
+        const todoList = document.querySelector("#todo-list");
+        const hint = document.querySelector("#hint");
+        const clearButton = document.querySelector("#clear-button");
+
+        function saveTodos() {
+            localStorage.setItem(storageKey, JSON.stringify(todos));
+        }
+
+        function render() {
+            todoList.replaceChildren();
+
+            for (const [index, todo] of todos.entries()) {
+                const item = document.createElement("li");
+                const text = document.createElement("span");
+                const completeButton = document.createElement("button");
+                const deleteButton = document.createElement("button");
+
+                item.className = todo.done ? "done" : "";
+                text.textContent = todo.text;
+                completeButton.textContent = todo.done ? "取消完成" : "完成";
+                deleteButton.textContent = "删除";
+                deleteButton.className = "delete-button";
+
+                completeButton.addEventListener("click", function () {
+                    todos[index].done = !todos[index].done;
+                    saveTodos();
+                    render();
+                });
+
+                deleteButton.addEventListener("click", function () {
+                    todos.splice(index, 1);
+                    saveTodos();
+                    render();
+                });
+
+                item.append(text, completeButton, deleteButton);
+                todoList.append(item);
+            }
+        }
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const text = input.value.trim();
+
+            if (text === "") {
+                hint.textContent = "请输入待办事项后再提交。";
+                return;
+            }
+
+            todos.push({ text: text, done: false });
+            input.value = "";
+            hint.textContent = "";
+            saveTodos();
+            render();
+        });
+
+        clearButton.addEventListener("click", function () {
+            todos.length = 0;
+            saveTodos();
+            render();
+        });
+
+        render();
+    </script>
+</body>
+</html>

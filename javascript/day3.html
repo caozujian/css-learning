@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 第 3 课</title>
+    <style>
+        body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .demo {
+            padding: 18px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        #message {
+            padding: 12px;
+            color: #30405f;
+            background: white;
+            border-radius: 6px;
+        }
+
+        button {
+            margin-right: 8px;
+            padding: 10px 16px;
+            color: white;
+            background: #667eea;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:last-child {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript 第 3 课：DOM 操作</h1>
+
+    <p>DOM（文档对象模型）会把 HTML 页面转换成 JavaScript 可以操作的对象。</p>
+
+    <h2>1. 选中元素</h2>
+    <pre><code>const title = document.querySelector("h1");
+const message = document.querySelector("#message");</code></pre>
+    <p><code>querySelector</code> 使用 CSS 选择器查找第一个匹配的元素。</p>
+
+    <h2>2. 修改内容和样式</h2>
+    <pre><code>message.textContent = "文字已经被修改";
+message.style.color = "green";</code></pre>
+    <p>推荐使用 <code>textContent</code> 修改文字，不要把用户输入直接放进 <code>innerHTML</code>。</p>
+
+    <div class="demo">
+        <h2 id="message">等待你的操作</h2>
+        <button id="change-message">修改文字</button>
+        <button id="reset-message">恢复原样</button>
+    </div>
+
+    <h2>3. 监听事件</h2>
+    <pre><code>button.addEventListener("click", function () {
+    // 用户点击按钮后执行这里的代码
+});</code></pre>
+
+    <script>
+        const message = document.querySelector("#message");
+        const changeButton = document.querySelector("#change-message");
+        const resetButton = document.querySelector("#reset-message");
+
+        changeButton.addEventListener("click", function () {
+            message.textContent = "你成功用 JavaScript 修改了 DOM！";
+            message.style.color = "#26734d";
+        });
+
+        resetButton.addEventListener("click", function () {
+            message.textContent = "等待你的操作";
+            message.style.color = "#30405f";
+        });
+    </script>
+</body>
+</html>

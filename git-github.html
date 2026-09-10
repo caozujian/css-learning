@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git 和 GitHub 第 1 课</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .task {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git 和 GitHub 第 1 课</h1>
+
+    <h2>1. Git 和 GitHub 的区别</h2>
+    <ul>
+        <li><strong>Git</strong>：安装在电脑上的版本控制工具。</li>
+        <li><strong>GitHub</strong>：在线保存 Git 仓库、展示项目和协作的平台。</li>
+    </ul>
+
+    <h2>2. 常用工作流</h2>
+    <pre><code>git status
+git add .
+git commit -m "完成 JavaScript 第 6 课"
+git log --oneline</code></pre>
+    <p>修改文件后，先用 <code>status</code> 查看变化，再用 <code>add</code> 暂存，最后用 <code>commit</code> 保存一个版本。</p>
+
+    <h2>3. 初始化当前学习项目</h2>
+    <p>在 PowerShell 中执行以下命令。路径中的反斜杠适用于 Windows：</p>
+    <pre><code>cd "D:\Study\PythonNote\web\css-learning"
+git init
+git status
+git add .
+git commit -m "开始学习网页开发"</code></pre>
+
+    <h2>4. 设置 Git 身份</h2>
+    <p>如果提交时提示没有用户名或邮箱，只需设置一次：</p>
+    <pre><code>git config --global user.name "你的名字"
+git config --global user.email "你的邮箱"</code></pre>
+    <p>邮箱建议使用你 GitHub 账号中已验证的邮箱。</p>
+
+    <div class="task">
+        <h2>动手任务</h2>
+        <ol>
+            <li>初始化当前 <code>css-learning</code> 文件夹。</li>
+            <li>创建第一个 commit。</li>
+            <li>运行 <code>git log --oneline</code>，确认能看到提交记录。</li>
+            <li>修改任意一个 HTML 文件，再次执行 <code>git status</code>。</li>
+        </ol>
+    </div>
+
+    <h2>记住这四个词</h2>
+    <ul>
+        <li><code>working tree</code>：你正在编辑的文件。</li>
+        <li><code>staging area</code>：通过 <code>git add</code> 准备提交的文件。</li>
+        <li><code>commit</code>：保存的版本节点。</li>
+        <li><code>repository</code>：Git 仓库。</li>
+    </ul>
+</body>
+</html>

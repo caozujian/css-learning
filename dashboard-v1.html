@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌤️ 个人仪表盘</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        /* ========== 顶部栏 ========== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .top-bar h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .top-bar .date-time {
+            text-align: right;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .top-bar .time {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            display: block;
+        }
+
+        /* ========== 网格布局 ========== */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 卡片通用样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header h2 .icon {
+            font-size: 22px;
+        }
+
+        /* 全宽卡片 */
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        /* ========== 时钟卡片 ========== */
+        .clock-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .clock-display {
+            font-size: 72px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .clock-date {
+            font-size: 16px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .clock-greeting {
+            font-size: 20px;
+            margin-top: 12px;
+            color: #ccc;
+        }
+
+        /* ========== 天气卡片 ========== */
+        .weather-search {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .weather-search input {
+            flex: 1;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .weather-search input:focus {
+            border-color: #667eea;
+        }
+
+        .weather-search input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .weather-search button {
+            padding: 10px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .weather-search button:hover {
+            background: #5a6fd6;
+        }
+
+        .weather-info {
+            text-align: center;
+            display: none;
+        }
+
+        .weather-info.show {
+            display: block;
+        }
+
+        .weather-icon-lg {
+            font-size: 60px;
+            margin: 10px 0;
+        }
+
+        .weather-temp {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .weather-desc {
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .weather-details {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        /* ========== Todo 卡片 ========== */
+        .todo-input-area {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .todo-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .todo-input-area input:focus {
+            border-color: #667eea;
+        }
+
+        .todo-input-area input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .todo-input-area button {
+            padding: 10px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .todo-input-area button:hover {
+            background: #5a6fd6;
+        }
+
+        .todo-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .todo-list {
+            list-style: none;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .todo-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .todo-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            transition: all 0.3s;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .todo-item.completed {
+            opacity: 0.5;
+        }
+
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+        }
+
+        .todo-checkbox {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .todo-text {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .todo-delete {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 5px;
+            transition: color 0.3s;
+        }
+
+        .todo-delete:hover {
+            color: #e74c3c;
+        }
+
+        .todo-empty {
+            text-align: center;
+            color: #666;
+            padding: 30px 0;
+            font-size: 14px;
+        }
+
+        /* ========== 名言卡片 ========== */
+        .quote-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 3px solid #667eea;
+        }
+
+        .quote-author {
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .quote-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .quote-actions button {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .quote-actions button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* ========== 倒计时卡片 ========== */
+        .countdown-card {
+            text-align: center;
+        }
+
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .countdown-block {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px 10px;
+            min-width: 70px;
+        }
+
+        .countdown-block .num {
+            font-size: 36px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            display: block;
+        }
+
+        .countdown-block .label {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .countdown-presets {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-presets button {
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #aaa;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .countdown-presets button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .countdown-presets button.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .countdown-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .countdown-controls button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-start {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-start:hover {
+            background: #5a6fd6;
+        }
+
+        .btn-pause {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .countdown-controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .countdown-finished {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #f39c12;
+            animation: pulse 1s infinite;
+            display: none;
+        }
+
+        .countdown-finished.show {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* ========== Toast 提示 ========== */
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .card-full {
+                grid-column: auto;
+            }
+            .clock-display {
+                font-size: 48px;
+            }
+            .weather-temp {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== 顶部栏 ========== -->
+    <div class="top-bar">
+        <h1>🌤️ 个人仪表盘</h1>
+        <div class="date-time">
+            <span class="time" id="topTime">00:00:00</span>
+            <span id="topDate">2025年1月1日 星期一</span>
+        </div>
+    </div>
+
+    <!-- ========== 仪表盘主体 ========== -->
+    <div class="dashboard">
+
+        <!-- 时钟卡片 -->
+        <div class="card clock-card">
+            <div class="card-header">
+                <h2><span class="icon">⏰</span> 实时时钟</h2>
+            </div>
+            <div class="clock-display" id="clockDisplay">00:00:00</div>
+            <div class="clock-date" id="clockDate">2025年1月1日 星期一</div>
+            <div class="clock-greeting" id="clockGreeting">早上好！☀️</div>
+        </div>
+
+        <!-- 天气卡片 -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon">🌤️</span> 天气查询</h2>
+            </div>
+            <div class="weather-search">
+                <input type="text" id="weatherInput" placeholder="输入城市名..." autocomplete="off">
+                <button id="weatherBtn">🔍</button>
+            </div>
+            <div class="weather-info" id="weatherInfo">
+                <div class="weather-icon-lg" id="weatherIcon">☀️</div>
+                <div class="weather-temp" id="weatherTemp">--°</div>
+                <div class="weather-desc" id="weatherDesc">--</div>
+                <div class="weather-details">
+                    <span>💧 <span id="weatherHumidity">--</span></span>
+                    <span>💨 <span id="weatherWind">--</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Todo 卡片 -->
+        <div class="card">
+            <div class="card-header">
+                <h2><span class="icon">📋</span> 待办事项</h2>
+            </div>
+            <div class="todo-input-area">
+                <input type="text" id="todoInput" placeholder="添加新任务..." autocomplete="off">
+                <button id="todoAddBtn">添加</button>
+            </div>
+            <div class="todo-stats">
+                <span>共 <strong id="todoTotal">0</strong> 项</span>
+                <span>完成 <strong id="todoDone">0</strong> 项</span>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+
+        <!-- 名言卡片 -->
+        <div class="card quote-card">
+            <div class="card-header">
+                <h2><span class="icon">💬</span> 今日名言</h2>
+            </div>
+            <div class="quote-text" id="quoteText">点击下方按钮获取名言</div>
+            <div class="quote-author" id="quoteAuthor"></div>
+            <div class="quote-actions">
+                <button id="quoteRefreshBtn">🔄 换一条</button>
+                <button id="quoteCopyBtn">📋 复制</button>
+            </div>
+        </div>
+
+        <!-- 倒计时卡片（全宽） -->
+        <div class="card card-full countdown-card">
+            <div class="card-header">
+                <h2><span class="icon">⏳</span> 倒计时器</h2>
+            </div>
+            <div class="countdown-presets" id="countdownPresets">
+                <button data-minutes="1">1分钟</button>
+                <button data-minutes="5">5分钟</button>
+                <button data-minutes="15">15分钟</button>
+                <button data-minutes="25" class="active">🍅 番茄钟</button>
+                <button data-minutes="45">45分钟</button>
+            </div>
+            <div class="countdown-display">
+                <div class="countdown-block">
+                    <span class="num" id="cdHours">00</span>
+                    <span class="label">时</span>
+                </div>
+                <div class="countdown-block">
+                    <span class="num" id="cdMinutes">25</span>
+                    <span class="label">分</span>
+                </div>
+                <div class="countdown-block">
+                    <span class="num" id="cdSeconds">00</span>
+                    <span class="label">秒</span>
+                </div>
+            </div>
+            <div class="countdown-controls">
+                <button class="btn-start" id="cdStart">▶ 开始</button>
+                <button class="btn-pause" id="cdPause" disabled>⏸ 暂停</button>
+                <button class="btn-reset" id="cdReset">↺ 重置</button>
+            </div>
+            <div class="countdown-finished" id="cdFinished">🎉 时间到！</div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ==========================================
+        //  模块 1：时钟
+        // ==========================================
+        const Clock = {
+            elements: {
+                topTime: document.getElementById('topTime'),
+                topDate: document.getElementById('topDate'),
+                display: document.getElementById('clockDisplay'),
+                date: document.getElementById('clockDate'),
+                greeting: document.getElementById('clockGreeting'),
+            },
+
+            weekDays: ['日', '一', '二', '三', '四', '五', '六'],
+
+            getGreeting(hour) {
+                if (hour < 6) return '夜深了，早点休息 🌙';
+                if (hour < 9) return '早上好！新的一天 ☀️';
+                if (hour < 12) return '上午好！精力充沛 💪';
+                if (hour < 14) return '中午好！记得吃午饭 🍜';
+                if (hour < 18) return '下午好！继续加油 🚀';
+                if (hour < 21) return '晚上好！放松一下 🌆';
+                return '夜深了，早点休息 🌙';
+            },
+
+            update() {
+                const now = new Date();
+                const h = String(now.getHours()).padStart(2, '0');
+                const m = String(now.getMinutes()).padStart(2, '0');
+                const s = String(now.getSeconds()).padStart(2, '0');
+                const timeStr = `${h}:${m}:${s}`;
+
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const date = now.getDate();
+                const day = this.weekDays[now.getDay()];
+                const dateStr = `${year}年${month}月${date}日 星期${day}`;
+
+                this.elements.topTime.textContent = timeStr;
+                this.elements.topDate.textContent = dateStr;
+                this.elements.display.textContent = timeStr;
+                this.elements.date.textContent = dateStr;
+                this.elements.greeting.textContent = this.getGreeting(now.getHours());
+
+                document.title = `${timeStr} - 个人仪表盘`;
+            },
+
+            init() {
+                this.update();
+                setInterval(() => this.update(), 1000);
+                console.log('✅ 时钟模块已启动');
+            }
+        };
+
+        // ==========================================
+        //  模块 2：天气
+        // ==========================================
+        const Weather = {
+            elements: {
+                input: document.getElementById('weatherInput'),
+                btn: document.getElementById('weatherBtn'),
+                info: document.getElementById('weatherInfo'),
+                icon: document.getElementById('weatherIcon'),
+                temp: document.getElementById('weatherTemp'),
+                desc: document.getElementById('weatherDesc'),
+                humidity: document.getElementById('weatherHumidity'),
+                wind: document.getElementById('weatherWind'),
+            },
+
+            weatherMap: {
+                0: { icon: '☀️', desc: '晴天' },
+                1: { icon: '🌤️', desc: '晴间多云' },
+                2: { icon: '⛅', desc: '多云' },
+                3: { icon: '☁️', desc: '阴天' },
+                45: { icon: '🌫️', desc: '雾' },
+                48: { icon: '🌫️', desc: '雾凇' },
+                51: { icon: '🌦️', desc: '毛毛雨' },
+                53: { icon: '🌦️', desc: '毛毛雨' },
+                55: { icon: '🌧️', desc: '毛毛雨' },
+                61: { icon: '🌧️', desc: '小雨' },
+                63: { icon: '🌧️', desc: '中雨' },
+                65: { icon: '🌧️', desc: '大雨' },
+                71: { icon: '❄️', desc: '小雪' },
+                73: { icon: '❄️', desc: '中雪' },
+                75: { icon: '❄️', desc: '大雪' },
+                80: { icon: '🌦️', desc: '阵雨' },
+                81: { icon: '🌧️', desc: '中阵雨' },
+                82: { icon: '⛈️', desc: '大阵雨' },
+                85: { icon: '🌨️', desc: '小阵雪' },
+                86: { icon: '🌨️', desc: '大阵雪' },
+                95: { icon: '⛈️', desc: '雷暴' },
+                96: { icon: '⛈️', desc: '雷暴+冰雹' },
+                99: { icon: '⛈️', desc: '雷暴+大冰雹' },
+            },
+
+            async fetchWeather(city) {
+                const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=zh`;
+                const geoRes = await fetch(geoUrl);
+                const geoData = await geoRes.json();
+
+                if (!geoData.results || geoData.results.length === 0) {
+                    throw new Error('未找到该城市');
+                }
+
+                const { latitude, longitude, name } = geoData.results[0];
+
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&current=relative_humidity_2m&timezone=Asia%2FShanghai`;
+                const weatherRes = await fetch(weatherUrl);
+                const weatherData = await weatherRes.json();
+
+                return {
+                    cityName: name,
+                    current: weatherData.current_weather,
+                    humidity: weatherData.current?.relative_humidity_2m || null,
+                };
+            },
+
+            render(data) {
+                const weatherInfo = this.weatherMap[data.current.weathercode] || { icon: '🌈', desc: '未知' };
+                this.elements.icon.textContent = weatherInfo.icon;
+                this.elements.temp.textContent = `${Math.round(data.current.temperature)}°`;
+                this.elements.desc.textContent = weatherInfo.desc;
+                this.elements.humidity.textContent = data.humidity ? `${data.humidity}%` : '--';
+                this.elements.wind.textContent = `${data.current.windspeed} km/h`;
+                this.elements.info.classList.add('show');
+            },
+
+            async search(city) {
+                if (!city || city.trim() === '') {
+                    Toast.show('请输入城市名');
+                    return;
+                }
+                try {
+                    const data = await this.fetchWeather(city.trim());
+                    this.render(data);
+                    localStorage.setItem('lastCity', city.trim());
+                } catch (error) {
+                    Toast.show(error.message || '查询失败，请重试');
+                }
+            },
+
+            init() {
+                this.elements.btn.addEventListener('click', () => {
+                    this.search(this.elements.input.value);
+                });
+                this.elements.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.search(this.elements.input.value);
+                });
+
+                const lastCity = localStorage.getItem('lastCity') || '北京';
+                this.elements.input.value = lastCity;
+                this.search(lastCity);
+
+                console.log('✅ 天气模块已启动');
+            }
+        };
+
+        // ==========================================
+        //  模块 3：待办事项
+        // ==========================================
+        const Todo = {
+            elements: {
+                input: document.getElementById('todoInput'),
+                addBtn: document.getElementById('todoAddBtn'),
+                list: document.getElementById('todoList'),
+                total: document.getElementById('todoTotal'),
+                done: document.getElementById('todoDone'),
+            },
+
+            todos: [],
+
+            load() {
+                const saved = localStorage.getItem('dashboardTodos');
+                if (saved) {
+                    this.todos = JSON.parse(saved);
+                } else {
+                    this.todos = [
+                        { id: 1, text: '学习 HTML 基础', completed: true },
+                        { id: 2, text: '学习 CSS 布局', completed: true },
+                        { id: 3, text: '完成个人仪表盘', completed: false },
+                    ];
+                }
+            },
+
+            save() {
+                localStorage.setItem('dashboardTodos', JSON.stringify(this.todos));
+            },
+
+            render() {
+                const list = this.elements.list;
+                list.innerHTML = '';
+
+                if (this.todos.length === 0) {
+                    list.innerHTML = '<div class="todo-empty">✨ 暂无待办事项</div>';
+                } else {
+                    this.todos.forEach((todo, index) => {
+                        const li = document.createElement('li');
+                        li.className = `todo-item${todo.completed ? ' completed' : ''}`;
+                        li.innerHTML = `
+                            <input type="checkbox" class="todo-checkbox" data-index="${index}" ${todo.completed ? 'checked' : ''}>
+                            <span class="todo-text">${this.escapeHtml(todo.text)}</span>
+                            <button class="todo-delete" data-index="${index}">🗑️</button>
+                        `;
+                        list.appendChild(li);
+                    });
+                }
+
+                this.updateStats();
+            },
+
+            updateStats() {
+                this.elements.total.textContent = this.todos.length;
+                this.elements.done.textContent = this.todos.filter(t => t.completed).length;
+            },
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            },
+
+            add(text) {
+                if (text.trim() === '') {
+                    Toast.show('请输入任务内容');
+                    return;
+                }
+                this.todos.push({
+                    id: Date.now(),
+                    text: text.trim(),
+                    completed: false
+                });
+                this.save();
+                this.render();
+                this.elements.input.value = '';
+                this.elements.input.focus();
+            },
+
+            toggle(index) {
+                this.todos[index].completed = !this.todos[index].completed;
+                this.save();
+                this.render();
+            },
+
+            remove(index) {
+                this.todos.splice(index, 1);
+                this.save();
+                this.render();
+            },
+
+            init() {
+                this.load();
+
+                this.elements.addBtn.addEventListener('click', () => {
+                    this.add(this.elements.input.value);
+                });
+
+                this.elements.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.add(this.elements.input.value);
+                });
+
+                this.elements.list.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    if (e.target.classList.contains('todo-checkbox')) {
+                        this.toggle(index);
+                    }
+                    if (e.target.classList.contains('todo-delete')) {
+                        this.remove(index);
+                    }
+                });
+
+                this.render();
+                console.log('✅ 待办事项模块已启动');
+            }
+        };
+
+        // ==========================================
+        //  模块 4：随机名言
+        // ==========================================
+        const Quote = {
+            elements: {
+                text: document.getElementById('quoteText'),
+                author: document.getElementById('quoteAuthor'),
+                refreshBtn: document.getElementById('quoteRefreshBtn'),
+                copyBtn: document.getElementById('quoteCopyBtn'),
+            },
+
+            quotes: [
+                { text: '生活不止眼前的苟且，还有诗和远方。', author: '高晓松' },
+                { text: '你必须非常努力，才能看起来毫不费力。', author: '佚名' },
+                { text: '种一棵树最好的时间是十年前，其次是现在。', author: '非洲谚语' },
+                { text: '人生就像一盒巧克力，你永远不知道下一颗是什么味道。', author: '《阿甘正传》' },
+                { text: '不要等待机会，而要创造机会。', author: '培根' },
+                { text: '千里之行，始于足下。', author: '老子' },
+                { text: '世上无难事，只要肯登攀。', author: '毛泽东' },
+                { text: '你若盛开，蝴蝶自来。', author: '佚名' },
+                { text: '时间就像海绵里的水，只要愿挤，总还是有的。', author: '鲁迅' },
+                { text: 'Stay hungry, stay foolish.', author: '乔布斯' },
+                { text: '不忘初心，方得始终。', author: '《华严经》' },
+                { text: '不积跬步，无以至千里。', author: '荀子' },
+                { text: '做最好的自己。', author: '佚名' },
+                { text: '机会总是留给有准备的人。', author: '巴斯德' },
+                { text: '天行健，君子以自强不息。', author: '《周易》' },
+            ],
+
+            currentQuote: null,
+
+            getRandom() {
+                const index = Math.floor(Math.random() * this.quotes.length);
+                return this.quotes[index];
+            },
+
+            display() {
+                this.currentQuote = this.getRandom();
+                this.elements.text.style.opacity = '0';
+                this.elements.author.style.opacity = '0';
+
+                setTimeout(() => {
+                    this.elements.text.textContent = this.currentQuote.text;
+                    this.elements.author.textContent = this.currentQuote.author
+                        ? `—— ${this.currentQuote.author}`
+                        : '';
+                    this.elements.text.style.opacity = '1';
+                    this.elements.author.style.opacity = '1';
+                }, 200);
+            },
+
+            copy() {
+                if (!this.currentQuote) return;
+                const text = `"${this.currentQuote.text}" —— ${this.currentQuote.author}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    Toast.show('✅ 已复制到剪贴板');
+                }).catch(() => {
+                    Toast.show('复制失败，请手动复制');
+                });
+            },
+
+            init() {
+                this.elements.text.style.transition = 'opacity 0.3s';
+                this.elements.author.style.transition = 'opacity 0.3s';
+
+                this.display();
+                this.elements.refreshBtn.addEventListener('click', () => this.display());
+                this.elements.copyBtn.addEventListener('click', () => this.copy());
+
+                console.log('✅ 名言模块已启动');
+            }
+        };
+
+        // ==========================================
+        //  模块 5：倒计时器
+        // ==========================================
+        const Countdown = {
+            elements: {
+                hours: document.getElementById('cdHours'),
+                minutes: document.getElementById('cdMinutes'),
+                seconds: document.getElementById('cdSeconds'),
+                presets: document.getElementById('countdownPresets'),
+                startBtn: document.getElementById('cdStart'),
+                pauseBtn: document.getElementById('cdPause'),
+                resetBtn: document.getElementById('cdReset'),
+                finished: document.getElementById('cdFinished'),
+            },
+
+            totalSeconds: 25 * 60,
+            remainingSeconds: 25 * 60,
+            timerId: null,
+            isPaused: false,
+
+            updateDisplay() {
+                const h = Math.floor(this.remainingSeconds / 3600);
+                const m = Math.floor((this.remainingSeconds % 3600) / 60);
+                const s = this.remainingSeconds % 60;
+                this.elements.hours.textContent = String(h).padStart(2, '0');
+                this.elements.minutes.textContent = String(m).padStart(2, '0');
+                this.elements.seconds.textContent = String(s).padStart(2, '0');
+            },
+
+            start() {
+                if (this.remainingSeconds <= 0) {
+                    this.remainingSeconds = this.totalSeconds;
+                }
+                if (this.timerId) clearInterval(this.timerId);
+
+                this.isPaused = false;
+                this.elements.finished.classList.remove('show');
+                this.elements.startBtn.disabled = true;
+                this.elements.pauseBtn.disabled = false;
+
+                this.timerId = setInterval(() => {
+                    this.remainingSeconds--;
+                    this.updateDisplay();
+
+                    if (this.remainingSeconds <= 0) {
+                        this.remainingSeconds = 0;
+                        this.updateDisplay();
+                        clearInterval(this.timerId);
+                        this.timerId = null;
+                        this.elements.finished.classList.add('show');
+                        this.elements.startBtn.disabled = false;
+                        this.elements.pauseBtn.disabled = true;
+                        this.elements.startBtn.textContent = '▶ 重新开始';
+                    }
+                }, 1000);
+            },
+
+            pause() {
+                if (this.timerId) {
+                    clearInterval(this.timerId);
+                    this.timerId = null;
+                }
+                this.isPaused = true;
+                this.elements.startBtn.disabled = false;
+                this.elements.pauseBtn.disabled = true;
+                this.elements.startBtn.textContent = '▶ 继续';
+            },
+
+            reset() {
+                if (this.timerId) {
+                    clearInterval(this.timerId);
+                    this.timerId = null;
+                }
+                this.isPaused = false;
+                this.remainingSeconds = this.totalSeconds;
+                this.updateDisplay();
+                this.elements.finished.classList.remove('show');
+                this.elements.startBtn.disabled = false;
+                this.elements.pauseBtn.disabled = true;
+                this.elements.startBtn.textContent = '▶ 开始';
+            },
+
+            setPreset(minutes) {
+                this.totalSeconds = minutes * 60;
+                this.remainingSeconds = this.totalSeconds;
+                this.updateDisplay();
+                this.elements.finished.classList.remove('show');
+                this.elements.startBtn.disabled = false;
+                this.elements.pauseBtn.disabled = true;
+                this.elements.startBtn.textContent = '▶ 开始';
+                if (this.timerId) {
+                    clearInterval(this.timerId);
+                    this.timerId = null;
+                }
+            },
+
+            init() {
+                this.updateDisplay();
+
+                this.elements.startBtn.addEventListener('click', () => this.start());
+                this.elements.pauseBtn.addEventListener('click', () => this.pause());
+                this.elements.resetBtn.addEventListener('click', () => this.reset());
+
+                this.elements.presets.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON') {
+                        const minutes = parseInt(e.target.dataset.minutes);
+                        this.setPreset(minutes);
+                        this.elements.presets.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                    }
+                });
+
+                console.log('✅ 倒计时模块已启动');
+            }
+        };
+
+        // ==========================================
+        //  模块 6：Toast 提示
+        // ==========================================
+        const Toast = {
+            element: document.getElementById('toast'),
+            timer: null,
+
+            show(message) {
+                this.element.textContent = message;
+                this.element.classList.add('show');
+                if (this.timer) clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
+                    this.element.classList.remove('show');
+                }, 2000);
+            }
+        };
+
+        // ==========================================
+        //  启动所有模块
+        // ==========================================
+        function initDashboard() {
+            Clock.init();
+            Weather.init();
+            Todo.init();
+            Quote.init();
+            Countdown.init();
+
+            console.log('🚀 个人仪表盘已完全启动！');
+            console.log('模块：时钟 | 天气 | 待办 | 名言 | 倒计时');
+        }
+
+        initDashboard();
+    </script>
+
+</body>
+</html>

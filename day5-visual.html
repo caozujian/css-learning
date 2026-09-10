@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Day 5 - 视觉属性</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            /* 页面背景渐变 */
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+        }
+
+        h1 { text-align: center; color: #333; }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        /* ==========================================
+           一、背景
+           ========================================== */
+        .bg-demo {
+            height: 200px;
+            border-radius: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* 纯色背景 */
+        .bg-color {
+            background-color: #667eea;
+        }
+
+        /* 背景图片 — 用占位图 */
+        .bg-image {
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800');
+            background-size: cover;          /* 覆盖整个容器 */
+            background-position: center;     /* 居中 */
+        }
+
+        /* background-size 的区别 */
+        .bg-cover {
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-contain {
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #333;
+        }
+
+        /* 简写 */
+        .bg-shorthand {
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800') center/cover no-repeat;
+        }
+
+
+        /* ==========================================
+           二、渐变
+           ========================================== */
+        /* 线性渐变 */
+        .gradient-linear-1 {
+            background: linear-gradient(to right, #667eea, #764ba2);
+        }
+
+        .gradient-linear-2 {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .gradient-linear-3 {
+            background: linear-gradient(to right, #667eea, #764ba2, #f093fb, #f5576c);
+        }
+
+        /* 径向渐变 */
+        .gradient-radial {
+            background: radial-gradient(circle, #667eea, #1a1a2e);
+        }
+
+        .gradient-radial-2 {
+            background: radial-gradient(circle at top left, #f093fb, transparent),
+                        radial-gradient(circle at bottom right, #4facfe, transparent);
+            background-color: #1a1a2e;
+        }
+
+        /* 硬渐变（条纹） */
+        .gradient-stripes {
+            background: repeating-linear-gradient(
+                45deg,
+                #667eea,
+                #667eea 10px,
+                #764ba2 10px,
+                #764ba2 20px
+            );
+        }
+
+
+        /* ==========================================
+           三、阴影
+           ========================================== */
+        .shadow-demo {
+            width: 200px;
+            height: 120px;
+            background: white;
+            border-radius: 12px;
+            margin: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .shadow-sm {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        .shadow-md {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .shadow-lg {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .shadow-xl {
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .shadow-colored {
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .shadow-inset {
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+            background: #f0f0f0;
+        }
+
+        /* 文字阴影 */
+        .text-shadow {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            text-align: center;
+            padding: 30px;
+        }
+
+        .text-shadow-neon {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow:
+                0 0 5px #667eea,
+                0 0 10px #667eea,
+                0 0 20px #667eea,
+                0 0 40px #764ba2;
+            text-align: center;
+            padding: 30px;
+            background: #1a1a2e;
+            border-radius: 12px;
+        }
+
+        /* 悬停阴影加深 */
+        .shadow-hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .shadow-hover:hover {
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================
+           四、圆角
+           ========================================== */
+        .radius-demo {
+            width: 100px;
+            height: 100px;
+            background: #667eea;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .radius-sm { border-radius: 8px; }
+        .radius-md { border-radius: 16px; }
+        .radius-lg { border-radius: 24px; }
+        .radius-circle { border-radius: 50%; }
+        .radius-pill { border-radius: 50px; width: 200px; }
+        .radius-custom { border-radius: 30px 0 30px 0; }  /* 对角圆角 */
+        .radius-top { border-radius: 20px 20px 0 0; }     /* 只有顶部圆角 */
+
+        /* ==========================================
+           五、玻璃态效果（Glassmorphism）
+           ========================================== */
+        .glass-bg {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 40px;
+            border-radius: 16px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            color: white;
+            text-align: center;
+            flex: 1 1 200px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .glass-card h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .glass-card p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* ==========================================
+           六、综合：好看的按钮
+           ========================================== */
+        .btn-collection {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-glass {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .btn-round {
+            border-radius: 50px;
+            background: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        }
+        .btn-round:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+        }
+
+        .btn:active {
+            transform: scale(0.95) !important;
+        }
+
+        /* ==========================================
+           七：毛玻璃卡片
+           ========================================== */
+        .frosted-demo {
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800') center/cover;
+            padding: 50px 30px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .frosted-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .frosted-card h3 {
+            font-size: 24px;
+            margin: 0 0 10px;
+        }
+
+        .frosted-card p {
+            opacity: 0.9;
+            margin: 0 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎨 CSS 视觉属性</h1>
+
+    <!-- ===== 一、背景 ===== -->
+    <h2>一、背景</h2>
+
+    <div class="demo-container">
+        <h3>纯色背景</h3>
+        <div class="bg-demo bg-color">background-color: #667eea</div>
+
+        <h3>背景图片 — cover</h3>
+        <div class="bg-demo bg-cover">background-size: cover</div>
+
+        <h3>背景图片 — contain</h3>
+        <div class="bg-demo bg-contain">background-size: contain（不裁剪，留白）</div>
+
+        <h3>背景简写</h3>
+        <div class="bg-demo bg-shorthand">background: url(...) center/cover no-repeat</div>
+    </div>
+
+    <!-- ===== 二、渐变 ===== -->
+    <h2>二、渐变</h2>
+
+    <div class="demo-container">
+        <h3>线性渐变 — to right</h3>
+        <div class="bg-demo gradient-linear-1">linear-gradient(to right, #667eea, #764ba2)</div>
+
+        <h3>线性渐变 — 135deg</h3>
+        <div class="bg-demo gradient-linear-2">linear-gradient(135deg, #f093fb, #f5576c)</div>
+
+        <h3>线性渐变 — 多色</h3>
+        <div class="bg-demo gradient-linear-3">四色渐变</div>
+
+        <h3>径向渐变</h3>
+        <div class="bg-demo gradient-radial">radial-gradient(circle, #667eea, #1a1a2e)</div>
+
+        <h3>双径向渐变叠加</h3>
+        <div class="bg-demo gradient-radial-2">两个径向渐变叠加</div>
+
+        <h3>条纹渐变</h3>
+        <div class="bg-demo gradient-stripes">repeating-linear-gradient</div>
+    </div>
+
+    <!-- ===== 三、阴影 ===== -->
+    <h2>三、阴影</h2>
+
+    <div class="demo-container">
+        <h3>box-shadow 层级对比</h3>
+        <div class="shadow-demo shadow-sm">阴影 sm</div>
+        <div class="shadow-demo shadow-md">阴影 md</div>
+        <div class="shadow-demo shadow-lg">阴影 lg</div>
+        <div class="shadow-demo shadow-xl">阴影 xl</div>
+        <div class="shadow-demo shadow-colored">彩色阴影</div>
+        <div class="shadow-demo shadow-inset">内阴影</div>
+
+        <h3>悬停阴影加深</h3>
+        <div class="shadow-demo shadow-hover">悬停我试试</div>
+
+        <h3>文字阴影</h3>
+        <div class="text-shadow">普通文字阴影</div>
+
+        <h3>霓虹灯文字</h3>
+        <div class="text-shadow-neon">NEON LIGHT</div>
+    </div>
+
+    <!-- ===== 四、圆角 ===== -->
+    <h2>四、圆角</h2>
+
+    <div class="demo-container">
+        <div class="radius-demo radius-sm">8px</div>
+        <div class="radius-demo radius-md">16px</div>
+        <div class="radius-demo radius-lg">24px</div>
+        <div class="radius-demo radius-circle">50%</div>
+        <div class="radius-demo radius-pill">胶囊形</div>
+        <div class="radius-demo radius-custom">对角</div>
+        <div class="radius-demo radius-top">顶圆</div>
+    </div>
+
+    <!-- ===== 五、玻璃态 ===== -->
+    <h2>五、玻璃态效果（Glassmorphism）</h2>
+
+    <div class="glass-bg">
+        <div class="glass-card">
+            <h3>🔒 安全</h3>
+            <p>数据加密传输</p>
+        </div>
+        <div class="glass-card">
+            <h3>⚡ 快速</h3>
+            <p>毫秒级响应</p>
+        </div>
+        <div class="glass-card">
+            <h3>🌍 全球</h3>
+            <p>多节点部署</p>
+        </div>
+    </div>
+
+    <!-- ===== 六、按钮 ===== -->
+    <h2>六、好看的按钮</h2>
+
+    <div class="demo-container">
+        <div class="btn-collection">
+            <button class="btn btn-primary">渐变按钮</button>
+            <button class="btn btn-outline">描边按钮</button>
+            <button class="btn btn-glass">玻璃按钮</button>
+            <button class="btn btn-round">圆角按钮</button>
+        </div>
+    </div>
+
+    <!-- ===== 七、毛玻璃卡片 ===== -->
+    <h2>七、毛玻璃卡片（图片背景）</h2>
+
+    <div class="frosted-demo">
+        <div class="frosted-card">
+            <h3>✨ 毛玻璃效果</h3>
+            <p>背景是图片，卡片是半透明+模糊</p>
+            <button class="btn btn-glass">了解更多</button>
+        </div>
+    </div>
+
+</body>
+</html>

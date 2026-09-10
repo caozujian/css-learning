@@ -1,0 +1,88 @@
+/* ===== CSS Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== 页面背景 ===== */
+body {
+    background: #eef1f5;
+    padding: 40px;
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+
+/* ===== 通知容器 ===== */
+.notifications {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.notifications h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 22px;
+}
+
+/* ===== 单条通知 ===== */
+.notification {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    /* 左边框实现彩色条 */
+    border-left: 4px solid #ccc;
+    background: #fafbfc;
+}
+
+/* 最后一条不需要底部间距 */
+.notification:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== 不同类型通知的左边框颜色 ===== */
+.notification-system {
+    border-left-color: #4a90d9;
+}
+
+.notification-comment {
+    border-left-color: #52c41a;
+}
+
+.notification-warning {
+    border-left-color: #fa8c16;
+}
+
+/* ===== 通知头部（图标+标题+时间） ===== */
+.notif-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.notif-icon {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.notif-title {
+    font-weight: bold;
+    color: #333;
+    font-size: 15px;
+}
+
+.notif-time {
+    margin-left: auto;          /* 推到最右边 */
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* ===== 通知正文 ===== */
+.notif-body {
+    color: #666;
+    font-size: 14px;
+    padding-left: 26px;         /* 和标题文字对齐 */
+}

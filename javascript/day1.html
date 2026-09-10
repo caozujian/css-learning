@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 第 1 课</title>
+    <style>
+        body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        .exercise {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 18px;
+            color: white;
+            background: #667eea;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            min-height: 1.7em;
+            color: #26734d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript 第 1 课：让网页动起来</h1>
+
+    <h2>1. 输出内容</h2>
+    <p>打开浏览器开发者工具（按 F12），切换到 Console（控制台）标签页。</p>
+    <pre><code>console.log("你好，JavaScript！");
+console.log(2 + 3);</code></pre>
+
+    <h2>2. 变量与数据</h2>
+    <pre><code>const name = "小明"; // 不会重新赋值的变量
+let age = 18;       // 可以重新赋值的变量
+age = age + 1;
+
+const isLearning = true; // 布尔值：true 或 false
+console.log(name, age, isLearning);</code></pre>
+    <p>常见数据类型：字符串、数字、布尔值。使用 <code>typeof</code> 可以查看类型。</p>
+
+    <h2>3. 运算与函数</h2>
+    <pre><code>function introduce(person, personAge) {
+    return `我叫${person}，今年${personAge}岁。`;
+}
+
+const message = introduce("小明", 19);
+console.log(message);</code></pre>
+
+    <div class="exercise">
+        <h2>动手练习</h2>
+        <p>修改下面的函数，让按钮显示：<strong>你好，我是你的名字，正在学习 JavaScript！</strong></p>
+        <pre><code>function createMessage(name) {
+    return `你好，我是${name}，正在学习 JavaScript！`;
+}</code></pre>
+        <button id="show-message">显示消息</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function createMessage(name) {
+            return `你好，我是${name}，正在学习 JavaScript！`;
+        }
+
+        document.querySelector("#show-message").addEventListener("click", function () {
+            document.querySelector("#result").textContent = createMessage("czj");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 第 2 课</title>
+    <style>
+        body {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .exercise {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input {
+            width: 90px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            color: white;
+            background: #667eea;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #result {
+            min-height: 1.7em;
+            color: #26734d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript 第 2 课：判断、数组和循环</h1>
+
+    <h2>1. 条件判断</h2>
+    <pre><code>const score = 85;
+
+if (score >= 60) {
+    console.log("及格了");
+} else {
+    console.log("还要继续努力");
+}</code></pre>
+    <p>比较常用的运算符：<code>&gt;</code>、<code>&lt;</code>、<code>===</code>、<code>&amp;&amp;</code>（并且）、<code>||</code>（或者）。</p>
+
+    <h2>2. 数组</h2>
+    <pre><code>const skills = ["HTML", "CSS", "JavaScript"];
+
+console.log(skills[0]); // 第一个元素
+console.log(skills.length); // 数组长度
+skills.push("Git"); // 添加元素
+console.log(skills);</code></pre>
+
+    <h2>3. 循环</h2>
+    <pre><code>const skills = ["HTML", "CSS", "JavaScript"];
+
+for (const skill of skills) {
+    console.log(`我正在学习 ${skill}`);
+}</code></pre>
+
+    <div class="exercise">
+        <h2>动手练习：判断成绩</h2>
+        <p>输入 0 到 100 的成绩，点击按钮查看结果。</p>
+        <input id="score" type="number" min="0" max="100" value="80">
+        <button id="check-score">判断成绩</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function getScoreMessage(score) {
+            if (score < 0 || score > 100) {
+                return "请输入 0 到 100 之间的成绩。";
+            }
+
+            if (score >= 90) {
+                return "优秀！";
+            }
+
+            if (score >= 60) {
+                return "及格了，继续加油！";
+            }
+
+            return "还要继续努力。";
+        }
+
+        document.querySelector("#check-score").addEventListener("click", function () {
+            const score = Number(document.querySelector("#score").value);
+            document.querySelector("#result").textContent = getScoreMessage(score);
+        });
+    </script>
+</body>
+</html>

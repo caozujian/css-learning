@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Day 4 - Grid</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+
+        h1 { text-align: center; color: #333; }
+        h2 { color: #555; border-bottom: 2px solid #667eea; padding-bottom: 8px; margin-top: 40px; }
+
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 演示用的子元素 */
+        .cell {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .cell:nth-child(1) { background: #667eea; }
+        .cell:nth-child(2) { background: #764ba2; }
+        .cell:nth-child(3) { background: #f093fb; }
+        .cell:nth-child(4) { background: #f5576c; }
+        .cell:nth-child(5) { background: #4facfe; }
+        .cell:nth-child(6) { background: #43e97b; }
+        .cell:nth-child(7) { background: #fa709a; }
+        .cell:nth-child(8) { background: #fee140; }
+
+        /* ==========================================
+           基础：grid-template-columns
+           ========================================== */
+        .grid-demo {
+            display: grid;
+            gap: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .gc-2 { grid-template-columns: 1fr 1fr; }           /* 2列等宽 */
+        .gc-3 { grid-template-columns: 1fr 1fr 1fr; }        /* 3列等宽 */
+        .gc-3-alt { grid-template-columns: repeat(3, 1fr); } /* 3列等宽（简写） */
+        .gc-2-1 { grid-template-columns: 2fr 1fr; }          /* 2列，第一列2倍宽 */
+        .gc-fixed { grid-template-columns: 200px 1fr 1fr; }  /* 固定+自适应 */
+        .gc-minmax { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); } /* 自适应 */
+        .gc-minmax .cell { min-height: 60px; }
+
+        /* ==========================================
+           行：grid-template-rows
+           ========================================== */
+        .gr-header {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 60px 120px 60px;  /* 3行，高度不同 */
+        }
+
+        /* ==========================================
+           跨列跨行：grid-column / grid-row
+           ========================================== */
+        .span-col-2 { grid-column: span 2; }
+        .span-col-3 { grid-column: span 3; }
+        .span-row-2 { grid-row: span 2; }
+
+        /* ==========================================
+           区域命名：grid-template-areas
+           ========================================== */
+        .ga-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: 60px 1fr 60px;
+            grid-template-areas:
+                "header  header  header"
+                "sidebar main    aside"
+                "footer  footer  footer";
+            gap: 10px;
+            min-height: 400px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .ga-header  { grid-area: header;  background: #667eea; }
+        .ga-sidebar { grid-area: sidebar; background: #764ba2; }
+        .ga-main    { grid-area: main;    background: #f093fb; }
+        .ga-aside   { grid-area: aside;   background: #f5576c; }
+        .ga-footer  { grid-area: footer;  background: #4facfe; }
+
+        .ga-layout .area {
+            border-radius: 8px;
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           对齐：place-items
+           ========================================== */
+        .pi-center {
+            display: grid;
+            place-items: center;       /* 水平和垂直都居中 */
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .pi-center .centered {
+            background: #667eea;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* ==========================================
+           实战：仪表盘布局
+           ========================================== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .dash-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .dash-card.span-2 { grid-column: span 2; }
+        .dash-card.span-4 { grid-column: span 4; }
+
+        .dash-card:nth-child(1) { border-top: 3px solid #667eea; }
+        .dash-card:nth-child(2) { border-top: 3px solid #764ba2; }
+        .dash-card:nth-child(3) { border-top: 3px solid #f093fb; }
+        .dash-card:nth-child(4) { border-top: 3px solid #f5576c; }
+        .dash-card:nth-child(5) { border-top: 3px solid #4facfe; }
+
+        /* ==========================================
+           响应式：小屏幕变一列
+           ========================================== */
+        @media (max-width: 600px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .dash-card.span-2,
+            .dash-card.span-4 {
+                grid-column: span 1;
+            }
+            .ga-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "sidebar"
+                    "aside"
+                    "footer";
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📊 Grid 布局</h1>
+
+    <!-- ===== 一、grid-template-columns ===== -->
+    <h2>一、grid-template-columns（定义列）</h2>
+
+    <div class="demo-container">
+        <h3>2列等宽：1fr 1fr</h3>
+        <div class="grid-demo gc-2">
+            <div class="cell">1</div><div class="cell">2</div>
+        </div>
+
+        <h3>3列等宽：repeat(3, 1fr)</h3>
+        <div class="grid-demo gc-3-alt">
+            <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+        </div>
+
+        <h3>2列不等宽：2fr 1fr</h3>
+        <div class="grid-demo gc-2-1">
+            <div class="cell">2fr</div><div class="cell">1fr</div>
+        </div>
+
+        <h3>固定 + 自适应：200px 1fr 1fr</h3>
+        <div class="grid-demo gc-fixed">
+            <div class="cell">固定200px</div>
+            <div class="cell">自适应</div><div class="cell">自适应</div>
+        </div>
+
+        <h3>自适应网格：auto-fill + minmax</h3>
+        <p style="font-size:13px;color:#999;">缩小浏览器宽度看看，自动换行 ↓</p>
+        <div class="grid-demo gc-minmax">
+            <div class="cell">1</div><div class="cell">2</div>
+            <div class="cell">3</div><div class="cell">4</div>
+            <div class="cell">5</div><div class="cell">6</div>
+        </div>
+    </div>
+
+    <!-- ===== 二、grid-template-rows ===== -->
+    <h2>二、grid-template-rows（定义行高）</h2>
+    <div class="demo-container">
+        <div class="grid-demo gr-header">
+            <div class="cell">头部 60px</div>
+            <div class="cell">头部</div>
+            <div class="cell">头部</div>
+            <div class="cell">内容 120px</div>
+            <div class="cell">内容</div>
+            <div class="cell">内容</div>
+            <div class="cell">底部 60px</div>
+            <div class="cell">底部</div>
+            <div class="cell">底部</div>
+        </div>
+    </div>
+
+    <!-- ===== 三、跨列跨行 ===== -->
+    <h2>三、跨列跨行（grid-column / grid-row）</h2>
+
+    <div class="demo-container">
+        <h3>span 2（跨2列）</h3>
+        <div class="grid-demo gc-3-alt">
+            <div class="cell span-col-2">跨2列</div>
+            <div class="cell">3</div>
+            <div class="cell">4</div>
+            <div class="cell">5</div>
+            <div class="cell">6</div>
+        </div>
+
+        <h3>span 3（跨3列）</h3>
+        <div class="grid-demo gc-3-alt">
+            <div class="cell span-col-3">跨3列，独占一行</div>
+            <div class="cell">4</div>
+            <div class="cell">5</div>
+            <div class="cell">6</div>
+        </div>
+    </div>
+
+    <!-- ===== 四、grid-template-areas ===== -->
+    <h2>四、grid-template-areas（区域命名）⭐ 最强大</h2>
+
+    <div class="demo-container" style="padding:0;">
+        <div class="ga-layout">
+            <div class="area ga-header">header 头部</div>
+            <div class="area ga-sidebar">sidebar 侧边栏</div>
+            <div class="area ga-main">main 主内容</div>
+            <div class="area ga-aside">aside 侧边栏</div>
+            <div class="area ga-footer">footer 底部</div>
+        </div>
+    </div>
+    <p style="font-size:13px;color:#999;">
+        ↑ 经典的「圣杯布局」。缩小浏览器到 600px 以下，看看响应式变化
+    </p>
+
+    <!-- ===== 五、place-items ===== -->
+    <h2>五、place-items（居中）</h2>
+    <div class="demo-container">
+        <div class="pi-center">
+            <div class="centered">水平和垂直都居中</div>
+        </div>
+        <p style="font-size:13px;color:#999;">↑ 一行代码：<code>place-items: center;</code>（Grid 独占）</p>
+    </div>
+
+    <!-- ===== 六、实战：仪表盘布局 ===== -->
+    <h2>六、实战：仪表盘布局</h2>
+
+    <div class="dashboard-grid">
+        <div class="dash-card">⏰ 时钟</div>
+        <div class="dash-card">🌤️ 天气</div>
+        <div class="dash-card">💬 名言</div>
+        <div class="dash-card">📊 统计</div>
+        <div class="dash-card span-4">📋 待办事项（全宽）</div>
+        <div class="dash-card span-2">📈 图表1</div>
+        <div class="dash-card span-2">📉 图表2</div>
+    </div>
+    <p style="font-size:13px;color:#999;">
+        ↑ 4列 Grid，某些卡片跨2列或4列。缩小浏览器到 600px 以下变一列
+    </p>
+
+</body>
+</html>

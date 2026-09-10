@@ -1,0 +1,23 @@
+body {
+    background: #f0f2f5;
+    padding: 40px;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.box {
+    background: #667eea;
+    color: white;
+
+    /* 内容尺寸 */
+    width: 300px;
+    height: 100px;
+
+    /* 内边距 */
+    padding: 30px;
+
+    /* 边框 */
+    border: 5px solid #333;
+
+    /* 外边距 */
+    margin-bottom: 30px;
+}

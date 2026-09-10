@@ -1,0 +1,119 @@
+.hero {
+    /* 1. 纯色背景 */
+    background: #667eea;
+
+    /* 2. 背景图片 */
+    background-image: url('image.jpg');
+    background-size: cover;       /* 铺满容器，裁剪多余 */
+    background-position: center;  /* 居中 */
+    background-repeat: no-repeat;
+
+    /* 简写（推荐） */
+    background: url('image.jpg') center/cover no-repeat;
+
+    /* 3. 线性渐变 */
+    background: linear-gradient(to right, #667eea, #764ba2);
+    /*           方向           起点颜色    终点颜色   */
+
+    /* 4. 对角渐变 */
+    background: linear-gradient(135deg, #667eea, #764ba2);
+
+    /* 5. 多色渐变 */
+    background: linear-gradient(to right, #f6d365, #fda085, #f5576c);
+
+    /* 6. 径向渐变（圆形扩散） */
+    background: radial-gradient(circle, #667eea, #333);
+}
+
+.btn {
+    background: #667eea;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    /* 过渡：属性 时长 缓动函数 延迟 */
+    transition: background 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+
+    /* 简写：所有属性统一过渡 */
+    /* transition: all 0.3s ease; */
+}
+
+.btn:hover {
+    background: #5a6fd6;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+.btn {
+    background: #667eea;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    /* 过渡：属性 时长 缓动函数 延迟 */
+    transition: background 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+
+    /* 简写：所有属性统一过渡 */
+    /* transition: all 0.3s ease; */
+}
+
+.btn:hover {
+    background: #5a6fd6;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* 1. 定义动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 也可以用百分比分更多步骤 */
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideIn {
+    0%   { opacity: 0; transform: translateX(-100px); }
+    60%  { opacity: 1; transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+/* 2. 使用动画 */
+.hero h1 {
+    animation: fadeInUp 1s ease-out;
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+/* 给每个卡片加延迟，实现逐个出现 */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }

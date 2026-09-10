@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Day 3 - Flexbox</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+
+        h1 { text-align: center; color: #333; }
+        h2 { color: #555; border-bottom: 2px solid #667eea; padding-bottom: 8px; margin-top: 40px; }
+
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 演示用的子元素 */
+        .box {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            min-width: 60px;
+        }
+
+        .box:nth-child(1) { background: #667eea; }
+        .box:nth-child(2) { background: #764ba2; }
+        .box:nth-child(3) { background: #f093fb; }
+        .box:nth-child(4) { background: #f5576c; }
+        .box:nth-child(5) { background: #4facfe; }
+
+        /* ==========================================
+           justify-content（主轴对齐）
+           ========================================== */
+        .flex-row {
+            display: flex;
+            gap: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            min-height: 80px;
+        }
+
+        .jc-start    { justify-content: flex-start; }    /* 默认，靠左 */
+        .jc-center   { justify-content: center; }         /* 居中 */
+        .jc-end      { justify-content: flex-end; }       /* 靠右 */
+        .jc-between  { justify-content: space-between; }  /* 两端对齐，中间均分 */
+        .jc-around   { justify-content: space-around; }   /* 每个元素两侧有间距 */
+        .jc-evenly   { justify-content: space-evenly; }   /* 间距完全均匀 */
+
+        /* ==========================================
+           align-items（交叉轴对齐）
+           ========================================== */
+        .ai-start    { align-items: flex-start; }
+        .ai-center   { align-items: center; }
+        .ai-end      { align-items: flex-end; }
+        .ai-stretch  { align-items: stretch; }
+
+        .ai-stretch .box {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .tall-box {
+            min-height: 60px;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           flex-direction（主轴方向）
+           ========================================== */
+        .fd-row           { flex-direction: row; }            /* 默认，水平 */
+        .fd-row-reverse   { flex-direction: row-reverse; }    /* 水平反向 */
+        .fd-column        { flex-direction: column; }         /* 垂直 */
+        .fd-column-reverse{ flex-direction: column-reverse; } /* 垂直反向 */
+
+        /* ==========================================
+           flex-wrap（换行）
+           ========================================== */
+        .fw-nowrap { flex-wrap: nowrap; }
+        .fw-wrap   { flex-wrap: wrap; }
+
+        .wide-box {
+            min-width: 200px;
+        }
+
+        /* ==========================================
+           子元素 flex 属性
+           ========================================== */
+        .flex-1 { flex: 1; }
+        .flex-2 { flex: 2; }
+        .flex-3 { flex: 3; }
+        .flex-fixed { flex: 0 0 200px; }  /* 不伸缩，固定200px */
+
+        /* ==========================================
+           导航栏实战
+           ========================================== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #333;
+            padding: 0 20px;
+            border-radius: 12px;
+            color: white;
+        }
+
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .navbar .nav-links a:hover {
+            color: white;
+        }
+
+        /* ==========================================
+           卡片网格实战
+           ========================================== */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1 1 250px;   /* 最小250px，自动伸缩 */
+            max-width: 350px;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h3 { margin: 0 0 10px; color: #333; }
+        .card p { color: #888; font-size: 14px; margin: 0 0 15px; }
+        .card .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #667eea;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* ==========================================
+           垂直居中实战
+           ========================================== */
+        .center-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .center-demo .centered {
+            background: #667eea;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📐 Flexbox 布局</h1>
+
+    <!-- ===== 一、justify-content ===== -->
+    <h2>一、justify-content（主轴对齐）</h2>
+
+    <div class="demo-container">
+        <h3>flex-start（默认）</h3>
+        <div class="flex-row jc-start">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>center</h3>
+        <div class="flex-row jc-center">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>flex-end</h3>
+        <div class="flex-row jc-end">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>space-between（两端对齐）</h3>
+        <div class="flex-row jc-between">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>space-around</h3>
+        <div class="flex-row jc-around">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>space-evenly</h3>
+        <div class="flex-row jc-evenly">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+    </div>
+
+    <!-- ===== 二、align-items ===== -->
+    <h2>二、align-items（交叉轴对齐）</h2>
+
+    <div class="demo-container">
+        <h3>flex-start（顶部）</h3>
+        <div class="flex-row ai-start">
+            <div class="box tall-box" style="padding-top:10px;padding-bottom:30px;">矮</div>
+            <div class="box tall-box" style="padding-top:30px;padding-bottom:10px;">高</div>
+            <div class="box tall-box">中</div>
+        </div>
+
+        <h3>center（垂直居中）⭐ 最常用</h3>
+        <div class="flex-row ai-center">
+            <div class="box tall-box" style="padding-top:10px;padding-bottom:30px;">矮</div>
+            <div class="box tall-box" style="padding-top:30px;padding-bottom:10px;">高</div>
+            <div class="box tall-box">中</div>
+        </div>
+
+        <h3>flex-end（底部）</h3>
+        <div class="flex-row ai-end">
+            <div class="box tall-box" style="padding-top:10px;padding-bottom:30px;">矮</div>
+            <div class="box tall-box" style="padding-top:30px;padding-bottom:10px;">高</div>
+            <div class="box tall-box">中</div>
+        </div>
+    </div>
+
+    <!-- ===== 三、flex-direction ===== -->
+    <h2>三、flex-direction（主轴方向）</h2>
+
+    <div class="demo-container">
+        <h3>row（默认，水平）</h3>
+        <div class="flex-row fd-row">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+
+        <h3>column（垂直）</h3>
+        <div class="flex-row fd-column">
+            <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        </div>
+    </div>
+
+    <!-- ===== 四、flex-wrap ===== -->
+    <h2>四、flex-wrap（换行）</h2>
+
+    <div class="demo-container">
+        <h3>nowrap（默认，不换行，子元素被压缩）</h3>
+        <div class="flex-row fw-nowrap">
+            <div class="box wide-box">1</div>
+            <div class="box wide-box">2</div>
+            <div class="box wide-box">3</div>
+            <div class="box wide-box">4</div>
+            <div class="box wide-box">5</div>
+        </div>
+
+        <h3>wrap（换行）⭐ 做卡片网格用这个</h3>
+        <div class="flex-row fw-wrap">
+            <div class="box wide-box">1</div>
+            <div class="box wide-box">2</div>
+            <div class="box wide-box">3</div>
+            <div class="box wide-box">4</div>
+            <div class="box wide-box">5</div>
+        </div>
+    </div>
+
+    <!-- ===== 五、flex 子元素属性 ===== -->
+    <h2>五、子元素 flex 属性</h2>
+
+    <div class="demo-container">
+        <h3>flex: 1（等分空间）</h3>
+        <div class="flex-row">
+            <div class="box flex-1">flex:1</div>
+            <div class="box flex-1">flex:1</div>
+            <div class="box flex-1">flex:1</div>
+        </div>
+
+        <h3>flex: 2（占2份）</h3>
+        <div class="flex-row">
+            <div class="box flex-2">flex:2</div>
+            <div class="box flex-1">flex:1</div>
+            <div class="box flex-1">flex:1</div>
+        </div>
+
+        <h3>flex: 0 0 200px（固定宽度）</h3>
+        <div class="flex-row">
+            <div class="box flex-fixed">固定200px</div>
+            <div class="box flex-1">自适应</div>
+            <div class="box flex-1">自适应</div>
+        </div>
+    </div>
+
+    <!-- ===== 六、实战：导航栏 ===== -->
+    <h2>六、实战：导航栏</h2>
+    <div class="demo-container" style="padding:0;">
+        <nav class="navbar">
+            <div class="logo">MySite</div>
+            <ul class="nav-links">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">产品</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">联系</a></li>
+            </ul>
+        </nav>
+    </div>
+    <p style="font-size:13px;color:#999;">
+        ↑ Logo 左、菜单右，用 <code>justify-content: space-between</code> 实现
+    </p>
+
+    <!-- ===== 七、实战：卡片网格 ===== -->
+    <h2>七、实战：卡片网格</h2>
+    <div class="card-grid">
+        <div class="card">
+            <h3>🚀 产品一</h3>
+            <p>这是一段产品描述文字，介绍这个产品的特点和优势。</p>
+            <a href="#" class="btn">了解详情</a>
+        </div>
+        <div class="card">
+            <h3>💡 产品二</h3>
+            <p>这是一段产品描述文字。</p>
+            <a href="#" class="btn">了解详情</a>
+        </div>
+        <div class="card">
+            <h3>🎯 产品三</h3>
+            <p>这是一段产品描述文字，介绍这个产品的特点和优势。</p>
+            <a href="#" class="btn">了解详情</a>
+        </div>
+        <div class="card">
+            <h3>✨ 产品四</h3>
+            <p>这是一段产品描述文字。</p>
+            <a href="#" class="btn">了解详情</a>
+        </div>
+    </div>
+    <p style="font-size:13px;color:#999;">
+        ↑ 用 <code>flex-wrap: wrap</code> + <code>flex: 1 1 250px</code>，自动换行
+    </p>
+
+    <!-- ===== 八、实战：垂直居中 ===== -->
+    <h2>八、实战：任意内容垂直居中</h2>
+    <div class="center-demo">
+        <div class="centered">我在正中间</div>
+    </div>
+    <p style="font-size:13px;color:#999;">
+        ↑ 父元素 <code>display: flex; justify-content: center; align-items: center;</code>
+    </p>
+
+</body>
+</html>

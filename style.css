@@ -1,0 +1,60 @@
+h1 {
+    color: #2c3e50;           /* 文字颜色 */
+    font-size: 36px;          /* 字体大小 */
+    font-weight: bold;        /* 粗细：normal/bold/100~900 */
+    text-align: center;       /* 对齐：left/center/right */
+    letter-spacing: 2px;      /* 字间距 */
+    line-height: 1.5;         /* 行高（倍数或像素） */
+}
+body {
+    background-color: #f5f5f5;  /* 背景色 */
+    /* 或者用渐变 */
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+img {
+    width: 300px;     /* 宽度 */
+    height: auto;     /* 高度自动，保持比例 */
+    border-radius: 12px;  /* 圆角 */
+}
+p {
+    margin: 20px 0;    /* 外边距（上和下各20px，左右0） */
+    padding: 10px;     /* 内边距（四边各10px） */
+}
+/* 标签选择器：所有 h2 */
+h2 {
+    color: #333;
+}
+
+/* 类选择器：所有 class="highlight" 的元素 */
+.highlight {
+    background-color: yellow;
+    padding: 5px 10px;
+}
+
+/* ID 选择器：id="main-title" 的元素 */
+#main-title {
+    font-size: 48px;
+    color: #667eea;
+}
+
+/* 鼠标悬停时 */
+a:hover {
+    color: orange;
+    text-decoration: underline;
+}
+
+/* 按钮被点击时 */
+button:active {
+    transform: scale(0.95);
+}
+
+/* 第一个子元素 */
+li:first-child {
+    font-weight: bold;
+}
+
+/* 最后一个子元素 */
+li:last-child {
+    color: red;
+}
+

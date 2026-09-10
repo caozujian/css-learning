@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    padding: 40px;
+    background: #0bbc23;
+    min-height: 200vh;  /* 方便测试滚动 */
+}
+
+.box {
+    width: 200px;
+    height: 100px;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.box-static {
+    position: static;  /* 默认，写不写都一样 */
+}
+
+.box-relative {
+    position: relative;
+    top: 20px;      /* 相对于自己原来的位置，向下移 20px */
+    left: 30px;     /* 向右移 30px */
+}
+
+.parent {
+    position: relative;  /* 父元素必须设置 relative */
+}
+
+.child {
+    position: absolute;
+    top: 0;
+    right: 0;    /* 贴在父元素的右上角 */
+}
+
+.card {
+    position: relative;  /* 锚点 */
+}
+
+.badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    /* 永远固定在屏幕右下角，滚动也不动 */
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    /* 滚动到顶部时粘住，之前正常滚动 */
+}
+
+.box1 {
+    position: absolute;
+    z-index: 1;   /* 数字越大越靠上 */
+}
+
+.box2 {
+    position: absolute;
+    z-index: 10;  /* 这个在上面 */
+}
+
+.box1 {
+    position: absolute;
+    z-index: 1;   /* 数字越大越靠上 */
+}
+
+.box2 {
+    position: absolute;
+    z-index: 10;  /* 这个在上面 */
+}
