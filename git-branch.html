@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git 分支</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .task {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git 分支与合并</h1>
+
+    <h2>1. 为什么使用分支</h2>
+    <p>分支可以让你在不影响稳定版 <code>main</code> 的情况下开发新功能。功能完成并检查后，再合并回主分支。</p>
+
+    <h2>2. 常用命令</h2>
+    <pre><code>git branch                 # 查看本地分支
+git switch -c feature-note # 创建并切换到新分支
+git add .
+git commit -m "添加分支练习"
+git switch main            # 切回主分支
+git merge feature-note     # 合并功能分支
+git branch -d feature-note # 删除已合并的分支</code></pre>
+
+    <h2>3. 推送分支</h2>
+    <pre><code>git push -u origin feature-note
+git push</code></pre>
+    <p>远程分支可以用于备份，也可以发起 Pull Request，让别人审查代码后再合并。</p>
+
+    <div class="task">
+        <h2>动手任务</h2>
+        <ol>
+            <li>先保存当前课程页：<code>git add .</code>，提交并推送到 <code>main</code>。</li>
+            <li>创建分支：<code>git switch -c feature-note</code>。</li>
+            <li>修改一个 HTML 文件，提交并推送这个分支。</li>
+            <li>在 GitHub 上查看分支，并创建 Pull Request。</li>
+            <li>合并 Pull Request 后，在本地执行 <code>git switch main</code> 和 <code>git pull</code>。</li>
+        </ol>
+    </div>
+
+    <h2>遇到冲突怎么办</h2>
+    <p>Git 会标记冲突文件。手动保留正确内容后，执行：</p>
+    <pre><code>git add 冲突文件名
+git commit -m "解决合并冲突"</code></pre>
+</body>
+</html>

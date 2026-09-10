@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 远程仓库</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .task {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+
+        .warning {
+            color: #9a3412;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub 远程仓库</h1>
+
+    <h2>1. 创建 GitHub 仓库</h2>
+    <ol>
+        <li>登录 GitHub，点击右上角 <strong>+</strong>，选择 <strong>New repository</strong>。</li>
+        <li>仓库名填写：<code>css-learning</code>。</li>
+        <li>选择 Public 或 Private。</li>
+        <li><strong>不要</strong>勾选 README、.gitignore 或 License，因为本地已经有 Git 提交。</li>
+        <li>点击 <strong>Create repository</strong>。</li>
+    </ol>
+
+    <h2>2. 连接本地仓库</h2>
+    <p>把下面的地址替换成你自己的 GitHub 用户名和仓库名：</p>
+    <pre><code>cd "D:\Study\PythonNote\web\css-learning"
+git remote add origin https://github.com/你的用户名/css-learning.git
+git remote -v</code></pre>
+
+    <h2>3. 推送代码</h2>
+    <pre><code>git branch -M main
+git push -u origin main</code></pre>
+    <p>第一次推送可能会打开浏览器要求登录 GitHub。请使用 GitHub 官方登录流程，不要把密码或 Token 粘贴给任何人。</p>
+
+    <h2>4. 以后同步代码</h2>
+    <pre><code>git add .
+git commit -m "描述这次修改"
+git push</code></pre>
+
+    <div class="task">
+        <h2>动手任务</h2>
+        <ol>
+            <li>在 GitHub 创建空仓库。</li>
+            <li>添加 <code>origin</code> 远程地址。</li>
+            <li>将 <code>main</code> 分支推送到 GitHub。</li>
+            <li>刷新 GitHub 仓库页面，确认能看到 JavaScript 和 Git 课程文件。</li>
+        </ol>
+    </div>
+
+    <p class="warning">安全提醒：不要把密码、Personal Access Token、API Key 写进代码或发到聊天中。</p>
+</body>
+</html>
