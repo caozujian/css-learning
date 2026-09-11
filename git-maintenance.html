@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git 仓库维护</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .task {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Git 仓库维护</h1>
+
+    <h2>1. 为什么需要 .gitignore</h2>
+    <p><code>.gitignore</code> 用来告诉 Git 不要跟踪临时文件、编辑器配置、本地环境变量和构建产物。</p>
+    <p>本项目的 <code>.gitignore</code> 已忽略 <code>.vscode/</code>、日志文件和 <code>.env</code> 文件。</p>
+
+    <h2>2. 检查仓库</h2>
+    <pre><code>git status
+git remote -v
+git branch -a
+git log --oneline --graph --all</code></pre>
+
+    <h2>3. 查看和撤销修改</h2>
+    <pre><code>git diff                 # 查看尚未暂存的修改
+git diff --staged        # 查看已经暂存的修改
+git restore 文件名       # 丢弃尚未提交的修改
+git restore --staged 文件名 # 从暂存区移除</code></pre>
+    <p><strong>注意：</strong><code>git restore</code> 可能会丢失本地修改，执行前先确认文件内容。</p>
+
+    <h2>4. 提交规范</h2>
+    <p>提交信息要简短、清楚，并说明做了什么：</p>
+    <pre><code>git commit -m "添加待办事项页面"
+git commit -m "修复成绩判断逻辑"
+git commit -m "更新 Git 学习文档"</code></pre>
+
+    <div class="task">
+        <h2>动手任务</h2>
+        <ol>
+            <li>运行 <code>git status</code>，确认新出现的 <code>.gitignore</code> 和课程页面。</li>
+            <li>提交它们：<code>git add .</code> 和 <code>git commit -m "完善仓库维护配置"</code>。</li>
+            <li>推送到 GitHub：<code>git push</code>。</li>
+            <li>在 GitHub 仓库中确认能看到课程页面，但不会上传被忽略的文件。</li>
+        </ol>
+    </div>
+</body>
+</html>

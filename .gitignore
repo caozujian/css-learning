@@ -1,0 +1,13 @@
+# 操作系统和编辑器生成的文件
+.DS_Store
+Thumbs.db
+.vscode/
+
+# 临时文件
+*.tmp
+*.log
+
+# 本地环境变量，可能包含密钥
+.env
+.env.*
+!.env.example
