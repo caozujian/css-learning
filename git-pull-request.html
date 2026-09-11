@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pull Request 与冲突处理</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            color: #f8f8f2;
+            background: #282a36;
+            border-radius: 8px;
+        }
+
+        code, pre {
+            font-family: Consolas, monospace;
+        }
+
+        .task {
+            padding: 16px;
+            background: #f3f5ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pull Request 与冲突处理</h1>
+
+    <h2>1. Pull Request 是什么</h2>
+    <p>Pull Request（PR）是请求把一个分支的修改合并到另一个分支，通常会先进行代码审查和自动检查。</p>
+
+    <h2>2. 创建并推送功能分支</h2>
+    <pre><code>git switch main
+git pull
+git switch -c feature-profile
+
+# 修改文件后
+git add .
+git commit -m "添加个人简介功能"
+git push -u origin feature-profile</code></pre>
+
+    <p>推送后，在 GitHub 打开仓库，点击 <strong>Compare &amp; pull request</strong>，目标分支选择 <code>main</code>。</p>
+
+    <h2>3. 合并 PR 后同步本地</h2>
+    <pre><code>git switch main
+git pull
+git branch -d feature-profile</code></pre>
+
+    <h2>4. 发生冲突时</h2>
+    <p>如果两个分支修改了同一处内容，Git 会提示冲突。打开冲突文件，处理这些标记：</p>
+    <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+main 分支的内容
+=======
+feature 分支的内容
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-profile</code></pre>
+    <p>保留正确内容并删除标记，然后执行：</p>
+    <pre><code>git add 冲突文件名
+git commit -m "解决合并冲突"</code></pre>
+    <p>如果发现合并方向不对，还没有解决文件时，可以取消合并：</p>
+    <pre><code>git merge --abort</code></pre>
+
+    <div class="task">
+        <h2>动手任务</h2>
+        <ol>
+            <li>创建 <code>feature-profile</code> 分支。</li>
+            <li>在任意 HTML 页面添加一行内容并提交。</li>
+            <li>推送分支并在 GitHub 创建 Pull Request。</li>
+            <li>合并 PR 后，本地执行 <code>git pull</code>。</li>
+        </ol>
+    </div>
+</body>
+</html>
